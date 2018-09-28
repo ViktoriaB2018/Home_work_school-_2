@@ -32,27 +32,12 @@ get '/contacts' do
 end
 
 post '/visit' do
-	@username = params[:username]
-	@phone = params[:phone]
-	@date_time = params[:date_time]
-	@select_barber = params[:select_barber]
-	@color = params[:color]
-
-	#if @username.valid? & 
-	c = Client.new
-	c.name = @username
-	c.phone = @phone
-	c.datestamp = @date_time
-	c.barber = @select_barber
-	c.color = @color
+	
+	c = Client.new params[:client]
 	c.save
 
 	erb "<h4>Thank you for check in!</h4>"
-	#else
-	#erb :visit, locals: {
-      #  @error = "Your details could not be saved, please try again."
-    #  }
-   # end
+
 end
 
 post '/contacts' do
