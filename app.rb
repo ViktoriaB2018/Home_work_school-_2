@@ -24,6 +24,10 @@ get '/visit' do
 	erb :visit
 end
 
+get '/contacts' do
+	erb :contacts
+end
+
 post '/visit' do
 	@username = params[:username]
 	@phone = params[:phone]
@@ -31,12 +35,13 @@ post '/visit' do
 	@select_barber = params[:select_barber]
 	@color = params[:color]
 
+	#if user_details.valid?
 	Client.create [ :name => @username,
 					:phone => @phone,
 					:datestamp => @date_timee,
 					:barber => @select_barber,
 					:color => @color ]
 
-	erb "<h4>Спасибо, Вы записаны!</h4>"
+	erb "<h4>Thank you for check in!</h4>"
 end
 
