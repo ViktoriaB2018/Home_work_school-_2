@@ -39,11 +39,13 @@ post '/visit' do
 	@color = params[:color]
 
 	#if @username.valid? & 
-	client = Client.create 	[ 	:name => @username,
-								:phone => @phone,
-								:datestamp => @date_time,
-								:barber => @select_barber,
-								:color => @color ]
+	c = Client.new
+	c.name = @username
+	c.phone = @phone
+	c.datestamp = @date_time
+	c.barber = @select_barber
+	c.color = @color
+	c.save
 
 	erb "<h4>Thank you for check in!</h4>"
 	#else
@@ -58,9 +60,11 @@ post '/contacts' do
 	@email = params[:email]
 	@textarea = params[:textarea]
 
-	contact = Contact.create [	:name => @name,
-								:email => @email,
-								:textarea => @textarea ]
+	e = Contact.new
+	e.name = @name
+	e.email = @email
+	e.textarea = @textarea
+	e.save
 
 		require 'pony'
 		Pony.mail(
