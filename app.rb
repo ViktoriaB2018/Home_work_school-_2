@@ -38,14 +38,19 @@ post '/visit' do
 	@select_barber = params[:select_barber]
 	@color = params[:color]
 
-	#if user_details.valid?
-	Client.create [ :name => @username,
-					:phone => @phone,
-					:datestamp => @date_time,
-					:barber => @select_barber,
-					:color => @color ]
+	#if @username.valid? & 
+	client = Client.create 	[ 	:name => @username,
+								:phone => @phone,
+								:datestamp => @date_time,
+								:barber => @select_barber,
+								:color => @color ]
 
 	erb "<h4>Thank you for check in!</h4>"
+	#else
+	#erb :visit, locals: {
+      #  @error = "Your details could not be saved, please try again."
+    #  }
+   # end
 end
 
 post '/contacts' do
@@ -53,9 +58,9 @@ post '/contacts' do
 	@email = params[:email]
 	@textarea = params[:textarea]
 
-	Contact.create [:name => @name,
-					:email => @email,
-					:textarea => @textarea]
+	contact = Contact.create [	:name => @name,
+								:email => @email,
+								:textarea => @textarea ]
 
 		require 'pony'
 		Pony.mail(
