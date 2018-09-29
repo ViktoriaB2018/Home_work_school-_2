@@ -2,8 +2,6 @@
 
 	<% @clients.each do |client| %>
 		<p>
-			<a href="<%= client.id %>">
-				<%= client.name %>
-			</a>
+			<a href="/client/<%= client.id %>"><%= client.name %></a>
 		</p>
 	<% end %>
