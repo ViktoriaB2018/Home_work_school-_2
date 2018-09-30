@@ -17,6 +17,9 @@ class Barber < ActiveRecord::Base
 end
 
 class Contact < ActiveRecord::Base
+	validates :name, presence: true, length: { minimum: 3 }
+	validates :email, presence: true
+	validates :textarea, presence: true
 end
 
 before do
@@ -33,7 +36,6 @@ get '/visit' do
 end
 
 post '/visit' do
-	
 	@c = Client.new params[:client]
 	if @c.save
 		erb "<h4>Thank you for check in!</h4>"
@@ -41,29 +43,21 @@ post '/visit' do
 		@error = @c.errors.full_messages.first
 		erb :visit
 	end
-
 end
 
 get '/contacts' do
+	@e = Contact.new
 	erb :contacts
 end
 
 post '/contacts' do
-	@name = params[:name]
-	@email = params[:email]
-	@textarea = params[:textarea]
-
-	e = Contact.new
-	e.name = @name
-	e.email = @email
-	e.textarea = @textarea
-	e.save
-
+	@e = Contact.new params[:contact]
+	if @e.save
 		require 'pony'
 		Pony.mail(
 		  :to => 'vikavebmaster@gmail.com',
-		  :subject => params[:name] + " email: " + params[:email] + " wants to contact you",
-		  :body => params[:textarea],
+		  :subject => @e.name + " email: " + @e.email + " wants to contact you",
+		  :body => @e.textarea,
 		  :via => :smtp,
 		  :via_options => { 
 		    :address              => 'smtp.gmail.com', 
@@ -76,7 +70,10 @@ post '/contacts' do
 		  })
 
 		erb "<h4>Thank you for contacting us! We will reply to you as soon as possible.</h4>"
-
+	else
+		@error = @e.errors.full_messages.first
+		erb :contacts
+	end
 end
 
 get '/barber/:id' do

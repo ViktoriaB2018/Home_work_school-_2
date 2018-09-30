@@ -8,17 +8,17 @@
 
 	<div class="form-group">
 		<label>Your name</label>
-		<input name="name" type="text" class="form-control" placeholder="Enter your name" value="<%=@name%>">
+		<input name="contact[name]" type="text" class="form-control" placeholder="Enter your name" value="<%= @e.name %>">
 	</div>
 
 	<div class="form-group">
 		<label>Your Email</label>
-		<input name="email" type="email" class="form-control" placeholder="Enter email" value="<%=@email%>">
+		<input name="contact[email]" type="email" class="form-control" placeholder="Enter email" value="<%= @e.email %>">
 	</div>
 
 	<div class="form-group">
 		<label>Text</label>
-		<textarea name="textarea" placeholder="Type text" class="form-control" rows="5"></textarea>
+		<textarea name="contact[textarea]" placeholder="Type text" class="form-control" rows="5" value="<%= @e.textarea %>"></textarea>
 	</div>
 
 	<button type="submit" class="btn btn-primary">Send e-mail</button>
